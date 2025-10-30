@@ -1,0 +1,38 @@
+[
+  {
+    "expense_id": 4,
+    "category": "food",
+    "amount": 1000.0,
+    "date": "2025-10-05"
+  },
+  {
+    "expense_id": 5,
+    "category": "loan",
+    "amount": 150.0,
+    "date": "2025-10-05"
+  },
+  {
+    "expense_id": 7,
+    "category": "loan",
+    "amount": 500.0,
+    "date": "2025-10-27"
+  },
+  {
+    "expense_id": 8,
+    "category": "food",
+    "amount": 100.0,
+    "date": "2025-09-03"
+  },
+  {
+    "expense_id": 9,
+    "category": "food",
+    "amount": 1.0,
+    "date": "2025-08-27"
+  },
+  {
+    "expense_id": 10,
+    "category": "food",
+    "amount": 1.0,
+    "date": "2025-10-17"
+  }
+]

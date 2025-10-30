@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="text-3xl font-bold mb-6 text-center">Daily Expenses Chart</h1>
+
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <canvas id="dailyExpenseChart"></canvas>
+</div>
+
+<a href="{{ url_for('index') }}" 
+   class="mt-6 block w-[250px] mx-auto text-center bg-blue-500 text-white py-2 px-6 rounded-lg shadow hover:bg-blue-600">
+   Go back
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var expenses = {{ expenses_by_date|tojson }};
+    var labels = Object.keys(expenses);       // dates
+    var data = Object.values(expenses);       // totals per day
+
+    var ctx = document.getElementById('dailyExpenseChart').getContext('2d');
+
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Total Expenses per Day',
+                data: data,
+                fill: true,
+                backgroundColor: 'rgba(75,192,192,0.2)',
+                borderColor: 'rgba(75,192,192,1)',
+                borderWidth: 2,
+                tension: 0.2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return '$' + context.raw;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Expense Amount ($)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

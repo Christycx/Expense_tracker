@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="text-3xl font-bold mb-6 text-center">Expense Tracker</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="w-full mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold mb-4">Add Expense</h2>
+        
+        <input type="text" placeholder="Category" id="category" class="border p-2 w-full mb-3 rounded-lg">
+        <input type="number" step="0.01" placeholder="Amount" id="amount" class="border p-2 w-full mb-3 rounded-lg">
+        <input type="date" id='date' class="border p-2 w-full mb-3 rounded-lg">
+        <button id="add_expense" class="bg-blue-500 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-600 w-full">Add Expense</button>
+    </div>
+    
+    <div class="w-full mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold mb-4">Your Expenses</h2>
+        <ul id="expense_list">
+            {% for expense in expenses %}
+            <li class="flex justify-between items-center py-2 border-b">
+                <span>{{ expense.category }}: ${{ "%.2f"|format(expense.amount) }} ({{ expense.date }})</span>
+                <button class="text-red-500 delete_expense hover:text-red-700" data-id="{{ expense.expense_id }}">Delete</button>
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <!-- ADDED THE NEW BUTTON HERE -->
+        <div class="mt-4 space-y-2">
+            <a href="{{ url_for('view_chart') }}" class="block bg-green-500 text-white py-2 px-6 rounded-lg shadow hover:bg-green-600 w-full text-center">View Category Chart</a>
+            <a href="{{ url_for('view_chart_by_date') }}" class="block bg-purple-500 text-white py-2 px-6 rounded-lg shadow hover:bg-purple-600 w-full text-center">View Daily Chart</a>
+            <!-- NEW BUTTON ADDED BELOW -->
+            <button id="previous_months_btn" class="block bg-orange-500 text-black py-2 px-6 rounded-lg shadow hover:bg-orange-600 w-full text-center">
+                Previous Months Expense
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ADD THIS MODAL CODE AT THE BOTTOM -->
+<!-- Previous Months Expenses Modal -->
+<div id="previousMonthsModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+    <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+        <div class="mt-3">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Previous Months Expenses</h3>
+            
+            <div id="monthlyExpensesContainer" class="space-y-4">
+                <!-- Monthly expenses will be loaded here -->
+            </div>
+            
+            <div class="mt-6 flex justify-end">
+                <button id="closeModal" class="bg-gray-500 text-white py-2 px-6 rounded-lg shadow hover:bg-gray-600">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
